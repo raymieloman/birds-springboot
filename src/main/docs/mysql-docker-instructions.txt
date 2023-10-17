@@ -1,0 +1,10 @@
+Maak een docker container aan:
+docker container run -dit --name my-birds-mysql -e MYSQL_ROOT_PASSWORD=yc2023! -p 3306:3306 mysql
+
+ga naar de container
+docker container exec -it my-birds-mysql bash
+
+in die container ga je naar de database-server
+mysql -h localhost -P 3306 --protocol=tcp -u root -p
+
+en dan kun je daarna de entities maken
