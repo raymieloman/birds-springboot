@@ -17,6 +17,9 @@ public class Bird {
 	private String color;
 	
 	
+	public long getId() {
+		return id;
+	}
 	public String getName() {
 		return name;
 	}
