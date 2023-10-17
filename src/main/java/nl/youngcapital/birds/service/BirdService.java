@@ -1,5 +1,7 @@
 package nl.youngcapital.birds.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class BirdService {
 	private BirdRepository birdRepository;
 	
 	
-	public Iterable<Bird> findAll() {
+	public List<Bird> findAll() {
 		
 		return birdRepository.findAll();
 	}
