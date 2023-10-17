@@ -21,12 +21,17 @@ public class BirdService {
 	}
 
 
-	public Bird create(Bird bird) {
+	public Bird createOrUpdate(Bird bird) {
 		return this.birdRepository.save(bird);
 	}
+	
 
 
 	public Optional<Bird> findById(long id) {
 		return this.birdRepository.findById(id);
+	}
+	
+	public void deleteById(long id) {
+		this.birdRepository.deleteById(id);
 	}
 }
