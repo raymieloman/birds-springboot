@@ -1,9 +1,11 @@
 package nl.youngcapital.birds.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +30,16 @@ public class BirdController {
 	@PostMapping
 	public Bird create(@RequestBody Bird bird) {
 		return this.birdService.create(bird);
+	}
+	
+	@GetMapping("{id}")
+	public Bird findById(@PathVariable long id) {
+		Optional<Bird> optionalBird = this.birdService.findById(id);
+		
+		if(optionalBird.isPresent()) {
+			return optionalBird.get();
+		} else {
+			return null; // zo moet het niet, later anders ... TODO
+		}
 	}
 }

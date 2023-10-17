@@ -1,6 +1,7 @@
 package nl.youngcapital.birds.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class BirdService {
 
 	public Bird create(Bird bird) {
 		return this.birdRepository.save(bird);
+	}
+
+
+	public Optional<Bird> findById(long id) {
+		return this.birdRepository.findById(id);
 	}
 }
