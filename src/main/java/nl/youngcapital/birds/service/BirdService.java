@@ -16,7 +16,11 @@ public class BirdService {
 	
 	
 	public List<Bird> findAll() {
-		
 		return birdRepository.findAll();
+	}
+
+
+	public Bird create(Bird bird) {
+		return this.birdRepository.save(bird);
 	}
 }
