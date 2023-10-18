@@ -2,6 +2,20 @@
 <html>
 <head>
     <title>Bird Information</title>
+
+    <style>
+        button {
+            background-color: red;
+            padding: 12px;
+            border: 7px solid blue;
+            opacity: 0.7;
+        }
+        button:hover {
+            background-color: green;
+        }
+
+
+    </style>
 </head>
 <body>
     <h1>Bird Information</h1>
@@ -33,6 +47,7 @@
                     <td>${bird.name}</td>
                     <td><strong>Color:</strong> ${bird.color}</td>
                     <td><strong>Weight:</strong> ${bird.weight} kg</td>
+                    <td><a href="bird.html?id=${bird.id}"><button>Detail</button></a></td>
                 `;
                 birdListDiv.appendChild(birdInfo);
             }
