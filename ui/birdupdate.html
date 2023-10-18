@@ -13,6 +13,8 @@
 <div id="birdInfo"></div>
 <div>
   <h2>Update Bird Information</h2>
+  <label for="newName">New Name:</label>
+  <input type="text" id="newName">
   <label for="newColor">New Color:</label>
   <input type="text" id="newColor">
   <label for="newWeight">New Weight:</label>
@@ -61,11 +63,13 @@
 
   // Function to make a PUT request to update bird information
   function updateBird() {
+    var newName = document.getElementById("newName").value;
     var newColor = document.getElementById("newColor").value;
     var newWeight = document.getElementById("newWeight").value;
 
     // Prepare the data for the update
     var birdData = {
+      name: newName,
       color: newColor,
       weight: parseFloat(newWeight)
     };
