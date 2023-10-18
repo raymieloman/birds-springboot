@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bird Management App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="mb-4">Bird Management</h1>
+
+  <!-- Create Bird Form -->
+  <div class="mb-4">
+    <h2>Create Bird</h2>
+    <form id="createBirdForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" class="form-control" id="color" required>
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg):</label>
+        <input type="number" step="0.01" class="form-control" id="weight" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Create Bird</button>
+    </form>
+  </div>
+
+  <!-- Bird List -->
+  <div>
+    <h2>Bird List</h2>
+    <ul id="birdList" class="list-group"></ul>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Function to refresh the bird list
+  function refreshBirdList() {
+    $.get('/api/birds', function(birds) {
+      var birdList = $('#birdList');
+      birdList.empty();
+
+      $.each(birds, function(index, bird) {
+        var listItem = $('<li class="list-group-item">').html(
+                '<strong>Name:</strong> ' + bird.name + '<br>' +
+                '<strong>Color:</strong> ' + bird.color + '<br>' +
+                '<strong>Weight:</strong> ' + bird.weight + ' kg<br>' +
+                '<button class="btn btn-danger btn-sm mt-2" onclick="deleteBird(' + bird.id + ')">Delete</button>'
+        );
+        birdList.append(listItem);
+      });
+    });
+  }
+
+  // Function to create a bird
+  $('#createBirdForm').submit(function(event) {
+    event.preventDefault();
+
+    var name = $('#name').val();
+    var color = $('#color').val();
+    var weight = parseFloat($('#weight').val());
+
+    var newBird = { name: name, color: color, weight: weight };
+
+    $.post('/api/birds', newBird, function(bird) {
+      $('#name').val('');
+      $('#color').val('');
+      $('#weight').val('');
+      refreshBirdList();
+    });
+  });
+
+  // Function to delete a bird
+  function deleteBird(id) {
+    $.ajax({
+      url: '/api/birds/' + id,
+      type: 'DELETE',
+      success: function() {
+        refreshBirdList();
+      },
+      error: function() {
+        alert('Failed to delete bird.');
+      }
+    });
+  }
+
+  // Initial load of bird data
+  refreshBirdList();
+</script>
+</body>
+</html>
