@@ -66,11 +66,17 @@
 
     var newBird = { name: name, color: color, weight: weight };
 
-    $.post('http://localhost:8080/api/birds', newBird, function(bird) {
-      $('#name').val('');
-      $('#color').val('');
-      $('#weight').val('');
-      refreshBirdList();
+    $.ajax({
+      url: 'http://localhost:8080/api/birds',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(newBird),
+      success: function(bird) {
+        $('#name').val('');
+        $('#color').val('');
+        $('#weight').val('');
+        refreshBirdList();
+      }
     });
   });
 
