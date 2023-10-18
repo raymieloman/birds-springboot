@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bird Information</title>
+</head>
+<body>
+<h1>Bird Information</h1>
+<div>
+  <label for="birdId">Enter Bird ID:</label>
+  <input type="text" id="birdId">
+  <button onclick="getBirdById()">Get Bird</button>
+</div>
+<div id="birdInfo"></div>
+
+<script>
+  // Function to make a GET request to retrieve information for a single bird by ID
+  function getBirdById() {
+    var birdId = document.getElementById("birdId").value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", `http://localhost:8080/api/birds/${birdId}`, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var bird = JSON.parse(xhr.responseText);
+          displayBirdInfo(bird);
+        } else if (xhr.status === 404) {
+          // Bird not found
+          displayBirdNotFound();
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  // Function to display bird information
+  function displayBirdInfo(bird) {
+    var birdInfoDiv = document.getElementById("birdInfo");
+    birdInfoDiv.innerHTML = `
+                <h3>${bird.name}</h3>
+                <p><strong>Color:</strong> ${bird.color}</p>
+                <p><strong>Weight:</strong> ${bird.weight} kg</p>
+            `;
+  }
+
+  // Function to display a message when the bird is not found
+  function displayBirdNotFound() {
+    var birdInfoDiv = document.getElementById("birdInfo");
+    birdInfoDiv.innerHTML = "<p>Bird not found.</p>";
+  }
+</script>
+</body>
+</html>
