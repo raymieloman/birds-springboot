@@ -12,7 +12,7 @@
 	
 	<groupId>nl.youngcapital</groupId>
 	<artifactId>birds</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>birds-app</name>
 	<description>Demo project for Spring Boot for Birds</description>
 	
