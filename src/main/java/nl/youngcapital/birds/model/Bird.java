@@ -42,4 +42,11 @@ public class Bird {
 		this.color = color;
 	}
 
+	public Set<Egg> getEggs() {
+		return eggs;
+	}
+
+	public void setEggs(Set<Egg> eggs) {
+		this.eggs = eggs;
+	}
 }
