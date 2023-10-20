@@ -34,4 +34,12 @@ public class Egg {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    public Bird getBird() {
+        return bird;
+    }
+
+    public void setBird(Bird bird) {
+        this.bird = bird;
+    }
 }

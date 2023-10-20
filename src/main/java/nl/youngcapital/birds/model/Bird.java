@@ -1,6 +1,9 @@
 package nl.youngcapital.birds.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +20,8 @@ public class Bird {
 	private String color;
 
 	@OneToMany(mappedBy = "bird")
+	@JsonIgnoreProperties("bird")
+	@Cascade(CascadeType.ALL)
 	private Set<Egg> eggs = new HashSet<>();
 	
 	
