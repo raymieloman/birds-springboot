@@ -14,8 +14,10 @@ public class Bird {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
+
+	@Column(nullable = false)
 	private String name;
+
 	private double weight;
 	private String color;
 
@@ -26,8 +28,7 @@ public class Bird {
 
 	@OneToOne
 	private Nest nest;
-	
-	
+
 	public long getId() {
 		return id;
 	}
@@ -56,5 +57,13 @@ public class Bird {
 
 	public void setEggs(Set<Egg> eggs) {
 		this.eggs = eggs;
+	}
+
+	public Nest getNest() {
+		return nest;
+	}
+
+	public void setNest(Nest nest) {
+		this.nest = nest;
 	}
 }

@@ -22,13 +22,19 @@ public class BirdService {
 		return birdRepository.findAll();
 	}
 
+
 	@Transactional
 	public Bird createOrUpdate(Bird bird) {
-		// NB set in the egg, the bird to this one
+		/*
+		Be clear: this saving is MANDATORY since the @Cascade annotation in Bird only! works
+		when the Egg is already a saved (attached) entity
+		Detached ::= the entity is NOT yet saved to the DB and has id 0 (zero)
+		Attached ::= The entity is SAVED to the DB and has an id other than 0 (zero)
+		 */
 		for (Egg egg : bird.getEggs()) {
 			egg.setBird(bird);
-
 		}
+
 		return this.birdRepository.save(bird);
 	}
 
