@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete Bird</title>
+</head>
+<body>
+<h1>Delete Bird</h1>
+<div>
+  <label for="birdId">Enter Bird ID:</label>
+  <input type="text" id="birdId">
+  <button onclick="deleteBird()">Delete Bird</button>
+</div>
+<div id="deleteStatus"></div>
+
+<script>
+  // Function to make a DELETE request to delete a bird by ID
+  function deleteBird() {
+    var birdId = document.getElementById("birdId").value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", `http://localhost:8080/api/birds/${birdId}`, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // Bird deletion successful
+          displayDeleteStatus("Bird deleted successfully.");
+        } else if (xhr.status === 404) {
+          // Bird not found
+          displayDeleteStatus("Bird not found.");
+        } else {
+          // Deletion failed
+          displayDeleteStatus("Failed to delete bird.");
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  // Function to display the delete status
+  function displayDeleteStatus(message) {
+    var deleteStatusDiv = document.getElementById("deleteStatus");
+    deleteStatusDiv.innerHTML = `<p>${message}</p>`;
+  }
+</script>
+</body>
+</html>
