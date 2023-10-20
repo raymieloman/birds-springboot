@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import nl.youngcapital.birds.model.Bird;
@@ -23,37 +24,44 @@ public class BirdController {
 	}
 	
 	@PostMapping
-	public Bird create(@RequestBody Bird bird) {
-		return this.birdService.createOrUpdate(bird);
+	public ResponseEntity<Bird> create(@RequestBody Bird bird) {
+		return ResponseEntity.status(201).body(this.birdService.createOrUpdate(bird));
 	}
 	
 	@GetMapping("{id}")
-	public Bird findById(@PathVariable long id) {
+	public ResponseEntity<Bird> findById(@PathVariable long id) {
 		Optional<Bird> optionalBird = this.birdService.findById(id);
 		
 		if(optionalBird.isPresent()) {
-			return optionalBird.get();
+			Bird result = optionalBird.get();
+
+			return ResponseEntity.ok(result);
 		} else {
-			return null; // zo moet het niet, later anders ... TODO
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	@PutMapping("{id}")
-	public Bird updateById(@PathVariable long id, @RequestBody Bird input) {
-		Bird target = findById(id);
+	public ResponseEntity<Bird> updateById(@PathVariable long id, @RequestBody Bird input) {
+		Optional<Bird> optionalTarget = this.birdService.findById(id);
 		
-		if(target ==null) {
-			return null;
+		if(optionalTarget.isPresent()) {
+			return ResponseEntity.notFound().build();
 		}
+		Bird target = optionalTarget.get();
 		target.setName(input.getName());
 		target.setColor(input.getColor());
 		target.setWeight(input.getWeight());
-		
-		return this.birdService.createOrUpdate(target);
+
+		Bird updated =this.birdService.createOrUpdate(target);
+
+		return ResponseEntity.ok(updated);
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteById(@PathVariable long id) {
+	public ResponseEntity<Void> deleteById(@PathVariable long id) {
 		this.birdService.deleteById(id);
+
+		return ResponseEntity.noContent().build();
 	}
 }

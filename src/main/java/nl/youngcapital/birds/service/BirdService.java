@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import nl.youngcapital.birds.model.Bird;
 import nl.youngcapital.birds.persistence.BirdRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BirdService {
@@ -21,7 +22,7 @@ public class BirdService {
 		return birdRepository.findAll();
 	}
 
-
+	@Transactional
 	public Bird createOrUpdate(Bird bird) {
 		// NB set in the egg, the bird to this one
 		for (Egg egg : bird.getEggs()) {
