@@ -23,6 +23,9 @@ public class Bird {
 	@JsonIgnoreProperties("bird")
 	@Cascade(CascadeType.ALL)
 	private Set<Egg> eggs = new HashSet<>();
+
+	@OneToOne
+	private Nest nest;
 	
 	
 	public long getId() {
