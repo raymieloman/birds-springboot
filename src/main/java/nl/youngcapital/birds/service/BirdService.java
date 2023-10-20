@@ -31,8 +31,10 @@ public class BirdService {
 		}
 		return this.birdRepository.save(bird);
 	}
-	
 
+	public List<Bird> findBirdsByColor(String color) {
+		return birdRepository.findBirdsByColor(color);
+	}
 
 	public Optional<Bird> findById(long id) {
 		return this.birdRepository.findById(id);

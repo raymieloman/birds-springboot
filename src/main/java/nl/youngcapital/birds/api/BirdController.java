@@ -3,6 +3,7 @@ package nl.youngcapital.birds.api;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,12 @@ public class BirdController {
 	public ResponseEntity<Bird> create(@RequestBody Bird bird) {
 		return ResponseEntity.status(201).body(this.birdService.createOrUpdate(bird));
 	}
+
+	@GetMapping("color/{color}")
+	public ResponseEntity<List<Bird>> findAllBirdsWithColor(@PathVariable  String color) {
+			return ResponseEntity.ok(this.birdService.findBirdsByColor(color));
+	}
+
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Bird> findById(@PathVariable long id) {
