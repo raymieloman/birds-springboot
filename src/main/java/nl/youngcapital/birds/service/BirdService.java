@@ -38,6 +38,10 @@ public class BirdService {
 		return this.birdRepository.save(bird);
 	}
 
+	public List<Bird> findBirdsByWeightIsGreaterThan(int weight) {
+		return birdRepository.findBirdsByWeightIsGreaterThan(weight);
+	}
+
 	public List<Bird> findBirdsByColor(String color) {
 		return birdRepository.findBirdsByColor(color);
 	}
