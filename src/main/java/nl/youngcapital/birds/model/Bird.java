@@ -1,9 +1,9 @@
 package nl.youngcapital.birds.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bird {
@@ -15,6 +15,9 @@ public class Bird {
 	private String name;
 	private double weight;
 	private String color;
+
+	@OneToMany(mappedBy = "bird")
+	private Set<Egg> eggs = new HashSet<>();
 	
 	
 	public long getId() {
