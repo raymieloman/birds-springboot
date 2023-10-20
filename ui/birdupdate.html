@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Bird Information</title>
+</head>
+<body>
+<h1>Update Bird Information</h1>
+<div>
+  <label for="birdId">Enter Bird ID:</label>
+  <input type="text" id="birdId">
+  <button onclick="getBirdById()">Get Bird</button>
+</div>
+<div id="birdInfo"></div>
+<div>
+  <h2>Update Bird Information</h2>
+  <label for="newName">New Name:</label>
+  <input type="text" id="newName">
+  <label for="newColor">New Color:</label>
+  <input type="text" id="newColor">
+  <label for="newWeight">New Weight:</label>
+  <input type="text" id="newWeight">
+  <button onclick="updateBird()">Update Bird</button>
+</div>
+
+<script>
+  var currentBirdId; // Store the current bird's ID
+
+  // Function to make a GET request to retrieve information for a single bird by ID
+  function getBirdById() {
+    var birdId = document.getElementById("birdId").value;
+    currentBirdId = birdId; // Store the current bird's ID for the update
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", `http://localhost:8080/api/birds/${birdId}`, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var bird = JSON.parse(xhr.responseText);
+          displayBirdInfo(bird);
+        } else if (xhr.status === 404) {
+          // Bird not found
+          displayBirdNotFound();
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  // Function to display bird information
+  function displayBirdInfo(bird) {
+    var birdInfoDiv = document.getElementById("birdInfo");
+    birdInfoDiv.innerHTML = `
+                <h3>${bird.name}</h3>
+                <p><strong>Color:</strong> ${bird.color}</p>
+                <p><strong>Weight:</strong> ${bird.weight} kg</p>
+            `;
+  }
+
+  // Function to display a message when the bird is not found
+  function displayBirdNotFound() {
+    var birdInfoDiv = document.getElementById("birdInfo");
+    birdInfoDiv.innerHTML = "<p>Bird not found.</p>";
+  }
+
+  // Function to make a PUT request to update bird information
+  function updateBird() {
+    var newName = document.getElementById("newName").value;
+    var newColor = document.getElementById("newColor").value;
+    var newWeight = document.getElementById("newWeight").value;
+
+    // Prepare the data for the update
+    var birdData = {
+      name: newName,
+      color: newColor,
+      weight: parseFloat(newWeight)
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", `http://localhost:8080/api/birds/${currentBirdId}`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // Update successful
+          alert("Bird information updated successfully.");
+          getBirdById(); // Refresh the displayed information
+        } else if (xhr.status === 404) {
+          // Bird not found
+          displayBirdNotFound();
+        }
+      }
+    };
+    xhr.send(JSON.stringify(birdData));
+  }
+</script>
+</body>
+</html>
