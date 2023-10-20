@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bird Information</title>
+
+    <style>
+        button {
+            background-color: red;
+            padding: 5px;
+            border: 1px solid blue;
+            opacity: 0.7;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: green;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Bird Information</h1>
+    <div id="birdList"></div>
+
+    <script>
+        // Function to make an XMLHttpRequest to retrieve bird data
+        function getBirdData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:8080/api/birds", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var birdList = JSON.parse(xhr.responseText);
+                    displayBirds(birdList);
+                }
+            };
+            xhr.send();
+        }
+
+        // Function to display the list of birds
+        function displayBirds(birdList) {
+            var birdListDiv = document.getElementById("birdList");
+            birdListDiv.innerHTML = "<table>"; // Clear the existing content
+
+            for (var i = 0; i < birdList.length; i++) {
+                var bird = birdList[i];
+                var birdInfo = document.createElement("tr");
+                birdInfo.innerHTML = `
+                    <td>${bird.name}</td>
+                    <td><strong>Color:</strong> ${bird.color}</td>
+                    <td><strong>Weight:</strong> ${bird.weight} kg</td>
+                    <td><a href="bird.html?id=${bird.id}"><button>Detail</button></a></td>
+                `;
+                birdListDiv.appendChild(birdInfo);
+            }
+        }
+
+        // Load bird data when the page loads
+        window.addEventListener("load", getBirdData);
+    </script>
+</body>
+</html>
+
