@@ -10,7 +10,7 @@ public class Egg {
     private long id;
 
     private String color;
-    private double weight;
+    private int weight;
 
     @ManyToOne
     private Bird bird;
@@ -27,11 +27,11 @@ public class Egg {
         this.color = color;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
