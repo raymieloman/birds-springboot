@@ -1,9 +1,12 @@
 package nl.youngcapital.birds.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Bird {
@@ -15,6 +18,11 @@ public class Bird {
 	private String name;
 	private double weight;
 	private String color;
+
+	@OneToMany(mappedBy = "bird")
+	@JsonIgnoreProperties("bird")
+	@Cascade(CascadeType.ALL)
+	private Set<Egg> eggs = new HashSet<>();
 	
 	
 	public long getId() {
@@ -39,4 +47,11 @@ public class Bird {
 		this.color = color;
 	}
 
+	public Set<Egg> getEggs() {
+		return eggs;
+	}
+
+	public void setEggs(Set<Egg> eggs) {
+		this.eggs = eggs;
+	}
 }
